@@ -95,8 +95,6 @@ namespace siby
 
             string fileName = string.Empty;
 
-            int z = 0;
-
             List<string> paths = new List<string>();
 
             paths = Directory.GetFiles(sourceFolder, "*.jpg", SearchOption.AllDirectories).ToList();
@@ -105,8 +103,6 @@ namespace siby
 
             foreach (string path in paths)
             {
-                z = z + 1;
-
                 //string make, model;
                 DateTime dateTimeOriginal;
 
