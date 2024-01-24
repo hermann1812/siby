@@ -17,10 +17,10 @@ namespace siby
 
         // Suggestion of a source and a destination folder
         string sourceFolder = "D:\\Temp\\unsorted";
-        static string destRootFolder = "D:\\Temp\\sorted";
+        string destRootFolder = "D:\\Temp\\sorted";
 
         // Log File
-        string logFile = Path.Combine(destRootFolder, "siby.log");
+        string logFile = string.Empty;
         string logText = string.Empty;
 
         // To decide whether the files should be copied or moved
@@ -121,6 +121,7 @@ namespace siby
         {
             // Create new log file
             if (File.Exists(logFile)) { File.Delete(logFile); }
+            logFile = Path.Combine(destRootFolder, "siby.log");
             logText = caption + " - Log File created " + DateTime.Now + Environment.NewLine;
             File.WriteAllText(logFile, logText);
 
@@ -175,19 +176,13 @@ namespace siby
             Invoke((MethodInvoker)delegate () { progressBar1.Style = ProgressBarStyle.Blocks; });
             Invoke((MethodInvoker)delegate () { progressBar1.Value = 0; });
 
-            if (move)
-            {
-                logText = "Complete! " + paths.Count + " files have been moved.";
-            }
-            else
-            {
-                logText = "Complete! " + paths.Count + " files have been copied.";
-            }
+            logText = "Complete! " + paths.Count + " files were processed.";
 
             File.AppendAllText(logFile, logText);
             MessageBox.Show(logText + "\r\nPlease check log file " + logFile, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            Invoke((MethodInvoker)delegate () { Close(); });
+            //Invoke((MethodInvoker)delegate () { Close(); });
+            Invoke((MethodInvoker)delegate () { Form1_Load(null, null); });
         }
     }
 }
