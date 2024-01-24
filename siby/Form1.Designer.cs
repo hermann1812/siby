@@ -36,16 +36,19 @@
             this.checkBox_move = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button_start = new System.Windows.Forms.Button();
+            this.label_counter = new System.Windows.Forms.Label();
+            this.label_existing = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // label_sorted
             // 
             this.label_sorted.AutoSize = true;
-            this.label_sorted.Location = new System.Drawing.Point(133, 108);
+            this.label_sorted.Location = new System.Drawing.Point(133, 94);
             this.label_sorted.Name = "label_sorted";
-            this.label_sorted.Size = new System.Drawing.Size(16, 13);
+            this.label_sorted.Size = new System.Drawing.Size(60, 13);
             this.label_sorted.TabIndex = 7;
-            this.label_sorted.Text = "-1";
+            this.label_sorted.Text = "Destination";
             // 
             // button_sorted
             // 
@@ -60,11 +63,11 @@
             // label_unsorted
             // 
             this.label_unsorted.AutoSize = true;
-            this.label_unsorted.Location = new System.Drawing.Point(133, 52);
+            this.label_unsorted.Location = new System.Drawing.Point(133, 38);
             this.label_unsorted.Name = "label_unsorted";
-            this.label_unsorted.Size = new System.Drawing.Size(16, 13);
+            this.label_unsorted.Size = new System.Drawing.Size(38, 13);
             this.label_unsorted.TabIndex = 5;
-            this.label_unsorted.Text = "-1";
+            this.label_unsorted.Text = "Souce";
             // 
             // button_unsorted
             // 
@@ -117,11 +120,41 @@
             this.button_start.UseVisualStyleBackColor = true;
             this.button_start.Click += new System.EventHandler(this.button_start_Click);
             // 
+            // label_counter
+            // 
+            this.label_counter.AutoSize = true;
+            this.label_counter.Location = new System.Drawing.Point(133, 66);
+            this.label_counter.Name = "label_counter";
+            this.label_counter.Size = new System.Drawing.Size(141, 13);
+            this.label_counter.TabIndex = 12;
+            this.label_counter.Text = "0 JPG-files have been found";
+            // 
+            // label_existing
+            // 
+            this.label_existing.AutoSize = true;
+            this.label_existing.Location = new System.Drawing.Point(136, 121);
+            this.label_existing.Name = "label_existing";
+            this.label_existing.Size = new System.Drawing.Size(164, 13);
+            this.label_existing.TabIndex = 13;
+            this.label_existing.Text = "0 files are in the destination folder";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(186, 216);
+            this.progressBar1.MarqueeAnimationSpeed = 0;
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(100, 23);
+            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar1.TabIndex = 14;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(381, 270);
+            this.ClientSize = new System.Drawing.Size(381, 255);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.label_existing);
+            this.Controls.Add(this.label_counter);
             this.Controls.Add(this.button_start);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.checkBox_move);
@@ -130,7 +163,10 @@
             this.Controls.Add(this.button_sorted);
             this.Controls.Add(this.label_unsorted);
             this.Controls.Add(this.button_unsorted);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -148,6 +184,9 @@
         private System.Windows.Forms.CheckBox checkBox_move;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button_start;
+        private System.Windows.Forms.Label label_counter;
+        private System.Windows.Forms.Label label_existing;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

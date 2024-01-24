@@ -1,17 +1,12 @@
 ﻿using ExifLib;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Remoting.Contexts;
+using System.Threading;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace siby
 {
@@ -21,9 +16,15 @@ namespace siby
         public static readonly string caption = "Siby - " + Assembly.GetEntryAssembly().GetName().Version;
 
         string sourceFolder = "D:\\Temp\\unsorted";
-        string destRootFolder = "D:\\Temp\\sorted";
+        static string destRootFolder = "D:\\Temp\\sorted";
+
+        string logFile = Path.Combine(destRootFolder, "siby.log");
+
+        string logText = string.Empty;
 
         bool move = false;
+
+        List<string> paths;
 
         public Form1()
         {
@@ -44,7 +45,6 @@ namespace siby
                     sourceFolder = fbd.SelectedPath;
                 }
             }
-
             Form1_Load(null, null);
         }
 
@@ -59,7 +59,6 @@ namespace siby
                     destRootFolder = fbd.SelectedPath;
                 }
             }
-
             Form1_Load(null, null);
         }
 
@@ -67,6 +66,9 @@ namespace siby
         {
             label_unsorted.Text = sourceFolder;
             label_sorted.Text = destRootFolder;
+
+            label_counter.Text = Directory.GetFiles(sourceFolder, "*.jpg", SearchOption.AllDirectories).Count().ToString() + " JPG-files have been found";
+            label_existing.Text = Directory.GetFiles(destRootFolder, "*.*", SearchOption.AllDirectories).Count().ToString() + " files have been found";
         }
 
         private void checkBox_copy_CheckedChanged(object sender, EventArgs e)
@@ -89,17 +91,28 @@ namespace siby
 
         private void button_start_Click(object sender, EventArgs e)
         {
-            string logFile = Path.Combine(destRootFolder, "siby.log");
-
             if (File.Exists(logFile)) { File.Delete(logFile); }
 
-            string fileName = string.Empty;
+            logText = caption + " - Log File created " + DateTime.Now + Environment.NewLine;
+            File.WriteAllText(logFile, logText);
 
-            List<string> paths = new List<string>();
+            paths = new List<string>();
 
             paths = Directory.GetFiles(sourceFolder, "*.jpg", SearchOption.AllDirectories).ToList();
 
-            int number = paths.Count;
+            new Thread(StartCopyOrMove).Start();
+
+
+       
+        }
+
+        private void StartCopyOrMove()
+        {
+            // Start ProgressBar
+            Invoke((MethodInvoker)delegate () { progressBar1.Style = ProgressBarStyle.Marquee; });
+            Invoke((MethodInvoker)delegate () { progressBar1.MarqueeAnimationSpeed = 30; });
+
+
 
             foreach (string path in paths)
             {
@@ -128,9 +141,16 @@ namespace siby
                     File.AppendAllText(logFile, ex.Message + " -> " + path + "\r\n");
                 }
             }
-            MessageBox.Show("Done!");
+            // Stop Progressbar
+            Invoke((MethodInvoker)delegate () { progressBar1.Style = ProgressBarStyle.Blocks; });
+            Invoke((MethodInvoker)delegate () { progressBar1.Value = 0; });
 
-            Close();
+            logText = "Complete! " + paths.Count + " files have been copied.";
+
+            File.AppendAllText(logFile, logText);
+            MessageBox.Show(logText + "\r\nPlease check log file " + logFile, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            Invoke((MethodInvoker)delegate () { Close(); });
         }
     }
 }
