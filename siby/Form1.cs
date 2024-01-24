@@ -1,10 +1,10 @@
 ﻿using ExifLib;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Remoting.Contexts;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -15,15 +15,18 @@ namespace siby
         // Caption for MessageBox
         public static readonly string caption = "Siby - " + Assembly.GetEntryAssembly().GetName().Version;
 
+        // Suggestion of a source and a destination folder
         string sourceFolder = "D:\\Temp\\unsorted";
         static string destRootFolder = "D:\\Temp\\sorted";
 
+        // Log File
         string logFile = Path.Combine(destRootFolder, "siby.log");
-
         string logText = string.Empty;
 
+        // To decide whether the files should be copied or moved
         bool move = false;
 
+        // List of JPG files in the source directory
         List<string> paths;
 
         public Form1()
@@ -33,7 +36,11 @@ namespace siby
             // Caption for form
             Text = caption;
         }
-
+        /// <summary>
+        /// Method to select the source directory
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_unsorted_Click(object sender, EventArgs e)
         {
             using (var fbd = new FolderBrowserDialog())
@@ -48,6 +55,11 @@ namespace siby
             Form1_Load(null, null);
         }
 
+        /// <summary>
+        /// Method to select the target directory
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_sorted_Click(object sender, EventArgs e)
         {
             using (var fbd = new FolderBrowserDialog())
@@ -62,6 +74,11 @@ namespace siby
             Form1_Load(null, null);
         }
 
+        /// <summary>
+        /// Actions that are carried out when the form is loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
             label_unsorted.Text = sourceFolder;
@@ -69,6 +86,15 @@ namespace siby
 
             label_counter.Text = Directory.GetFiles(sourceFolder, "*.jpg", SearchOption.AllDirectories).Count().ToString() + " JPG-files have been found";
             label_existing.Text = Directory.GetFiles(destRootFolder, "*.*", SearchOption.AllDirectories).Count().ToString() + " files have been found";
+
+            if (!checkBox_copy.Checked & !checkBox_move.Checked)
+            {
+                button_start.Enabled = false;
+            }
+            else
+            {
+                button_start.Enabled = true;
+            }
         }
 
         private void checkBox_copy_CheckedChanged(object sender, EventArgs e)
@@ -78,6 +104,7 @@ namespace siby
                 checkBox_move.Checked = false;
                 move = false;
             }
+            Form1_Load(null, null);
         }
 
         private void checkBox_move_CheckedChanged(object sender, EventArgs e)
@@ -87,23 +114,22 @@ namespace siby
                 checkBox_copy.Checked = false;
                 move = true;
             }
+            Form1_Load(null, null);
         }
 
         private void button_start_Click(object sender, EventArgs e)
         {
+            // Create new log file
             if (File.Exists(logFile)) { File.Delete(logFile); }
-
             logText = caption + " - Log File created " + DateTime.Now + Environment.NewLine;
             File.WriteAllText(logFile, logText);
 
+            // List of JPG files in the source directory
             paths = new List<string>();
-
             paths = Directory.GetFiles(sourceFolder, "*.jpg", SearchOption.AllDirectories).ToList();
 
+            // Start of file operations
             new Thread(StartCopyOrMove).Start();
-
-
-       
         }
 
         private void StartCopyOrMove()
@@ -111,8 +137,6 @@ namespace siby
             // Start ProgressBar
             Invoke((MethodInvoker)delegate () { progressBar1.Style = ProgressBarStyle.Marquee; });
             Invoke((MethodInvoker)delegate () { progressBar1.MarqueeAnimationSpeed = 30; });
-
-
 
             foreach (string path in paths)
             {
@@ -133,8 +157,14 @@ namespace siby
 
                     if (!Directory.Exists(destFolder)) { Directory.CreateDirectory(destFolder); }
 
-                    //File.Move(path, destPath);
-                    File.Copy(path, destPath);
+                    if (move)
+                    {
+                        File.Move(path, destPath);
+                    }
+                    else
+                    {
+                        File.Copy(path, destPath);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -145,7 +175,14 @@ namespace siby
             Invoke((MethodInvoker)delegate () { progressBar1.Style = ProgressBarStyle.Blocks; });
             Invoke((MethodInvoker)delegate () { progressBar1.Value = 0; });
 
-            logText = "Complete! " + paths.Count + " files have been copied.";
+            if (move)
+            {
+                logText = "Complete! " + paths.Count + " files have been moved.";
+            }
+            else
+            {
+                logText = "Complete! " + paths.Count + " files have been copied.";
+            }
 
             File.AppendAllText(logFile, logText);
             MessageBox.Show(logText + "\r\nPlease check log file " + logFile, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);

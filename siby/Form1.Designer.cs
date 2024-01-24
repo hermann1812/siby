@@ -39,12 +39,13 @@
             this.label_counter = new System.Windows.Forms.Label();
             this.label_existing = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label_sorted
             // 
             this.label_sorted.AutoSize = true;
-            this.label_sorted.Location = new System.Drawing.Point(133, 94);
+            this.label_sorted.Location = new System.Drawing.Point(134, 91);
             this.label_sorted.Name = "label_sorted";
             this.label_sorted.Size = new System.Drawing.Size(60, 13);
             this.label_sorted.TabIndex = 7;
@@ -52,18 +53,18 @@
             // 
             // button_sorted
             // 
-            this.button_sorted.Location = new System.Drawing.Point(15, 94);
+            this.button_sorted.Location = new System.Drawing.Point(16, 79);
             this.button_sorted.Name = "button_sorted";
             this.button_sorted.Size = new System.Drawing.Size(112, 41);
             this.button_sorted.TabIndex = 6;
-            this.button_sorted.Text = "Folder with\r\nsorted JPG files";
+            this.button_sorted.Text = "Select folder for\r\nsorted JPG files";
             this.button_sorted.UseVisualStyleBackColor = true;
             this.button_sorted.Click += new System.EventHandler(this.button_sorted_Click);
             // 
             // label_unsorted
             // 
             this.label_unsorted.AutoSize = true;
-            this.label_unsorted.Location = new System.Drawing.Point(133, 38);
+            this.label_unsorted.Location = new System.Drawing.Point(134, 42);
             this.label_unsorted.Name = "label_unsorted";
             this.label_unsorted.Size = new System.Drawing.Size(38, 13);
             this.label_unsorted.TabIndex = 5;
@@ -71,18 +72,18 @@
             // 
             // button_unsorted
             // 
-            this.button_unsorted.Location = new System.Drawing.Point(15, 38);
+            this.button_unsorted.Location = new System.Drawing.Point(16, 32);
             this.button_unsorted.Name = "button_unsorted";
             this.button_unsorted.Size = new System.Drawing.Size(112, 41);
             this.button_unsorted.TabIndex = 4;
-            this.button_unsorted.Text = "Folder with\r\nunsorted JPG files";
+            this.button_unsorted.Text = "Select folder with\r\nunsorted JPG files";
             this.button_unsorted.UseVisualStyleBackColor = true;
             this.button_unsorted.Click += new System.EventHandler(this.button_unsorted_Click);
             // 
             // checkBox_copy
             // 
             this.checkBox_copy.AutoSize = true;
-            this.checkBox_copy.Location = new System.Drawing.Point(15, 152);
+            this.checkBox_copy.Location = new System.Drawing.Point(16, 126);
             this.checkBox_copy.Name = "checkBox_copy";
             this.checkBox_copy.Size = new System.Drawing.Size(50, 17);
             this.checkBox_copy.TabIndex = 8;
@@ -93,7 +94,7 @@
             // checkBox_move
             // 
             this.checkBox_move.AutoSize = true;
-            this.checkBox_move.Location = new System.Drawing.Point(15, 176);
+            this.checkBox_move.Location = new System.Drawing.Point(16, 149);
             this.checkBox_move.Name = "checkBox_move";
             this.checkBox_move.Size = new System.Drawing.Size(53, 17);
             this.checkBox_move.TabIndex = 9;
@@ -104,15 +105,16 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 13);
+            this.label1.Size = new System.Drawing.Size(175, 20);
             this.label1.TabIndex = 10;
             this.label1.Text = "Sort Images By Year";
             // 
             // button_start
             // 
-            this.button_start.Location = new System.Drawing.Point(15, 199);
+            this.button_start.Location = new System.Drawing.Point(16, 172);
             this.button_start.Name = "button_start";
             this.button_start.Size = new System.Drawing.Size(112, 41);
             this.button_start.TabIndex = 11;
@@ -123,7 +125,7 @@
             // label_counter
             // 
             this.label_counter.AutoSize = true;
-            this.label_counter.Location = new System.Drawing.Point(133, 66);
+            this.label_counter.Location = new System.Drawing.Point(134, 60);
             this.label_counter.Name = "label_counter";
             this.label_counter.Size = new System.Drawing.Size(141, 13);
             this.label_counter.TabIndex = 12;
@@ -132,7 +134,7 @@
             // label_existing
             // 
             this.label_existing.AutoSize = true;
-            this.label_existing.Location = new System.Drawing.Point(136, 121);
+            this.label_existing.Location = new System.Drawing.Point(134, 107);
             this.label_existing.Name = "label_existing";
             this.label_existing.Size = new System.Drawing.Size(164, 13);
             this.label_existing.TabIndex = 13;
@@ -140,18 +142,28 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(186, 216);
+            this.progressBar1.Location = new System.Drawing.Point(137, 171);
             this.progressBar1.MarqueeAnimationSpeed = 0;
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(100, 23);
+            this.progressBar1.Size = new System.Drawing.Size(194, 41);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBar1.TabIndex = 14;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(193, 14);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(121, 13);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "(stored in the EXIF data)";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(381, 255);
+            this.ClientSize = new System.Drawing.Size(343, 224);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label_existing);
             this.Controls.Add(this.label_counter);
@@ -187,6 +199,7 @@
         private System.Windows.Forms.Label label_counter;
         private System.Windows.Forms.Label label_existing;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label label2;
     }
 }
 
