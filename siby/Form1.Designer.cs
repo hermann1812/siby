@@ -40,6 +40,7 @@
             this.label_existing = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label2 = new System.Windows.Forms.Label();
+            this.label_progress = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label_sorted
@@ -142,10 +143,10 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(137, 171);
+            this.progressBar1.Location = new System.Drawing.Point(137, 195);
             this.progressBar1.MarqueeAnimationSpeed = 0;
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(194, 41);
+            this.progressBar1.Size = new System.Drawing.Size(274, 17);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBar1.TabIndex = 14;
             // 
@@ -158,11 +159,21 @@
             this.label2.TabIndex = 15;
             this.label2.Text = "(stored in the EXIF data)";
             // 
+            // label_progress
+            // 
+            this.label_progress.AutoSize = true;
+            this.label_progress.Location = new System.Drawing.Point(260, 179);
+            this.label_progress.Name = "label_progress";
+            this.label_progress.Size = new System.Drawing.Size(24, 13);
+            this.label_progress.TabIndex = 16;
+            this.label_progress.Text = "0/0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(343, 224);
+            this.ClientSize = new System.Drawing.Size(423, 224);
+            this.Controls.Add(this.label_progress);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label_existing);
@@ -200,6 +211,7 @@
         private System.Windows.Forms.Label label_existing;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label_progress;
     }
 }
 

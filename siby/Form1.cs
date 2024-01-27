@@ -19,6 +19,9 @@ namespace siby
         string sourceFolder = "D:\\Temp\\unsorted";
         string destRootFolder = "D:\\Temp\\sorted";
 
+        // The last used directories will be saved in this text file
+        string directories = Path.Combine(Path.GetTempPath(), "siby.txt");
+
         // Log File
         string logFile = string.Empty;
         string logText = string.Empty;
@@ -81,6 +84,15 @@ namespace siby
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
+            // If available read the paths of last used directories
+            if (File.Exists(directories))
+            {
+                string[] lines = File.ReadAllLines(directories);
+
+                sourceFolder = lines[0];
+                destRootFolder = lines[1];
+            }
+
             label_unsorted.Text = sourceFolder;
             label_sorted.Text = destRootFolder;
 
@@ -119,6 +131,10 @@ namespace siby
 
         private void button_start_Click(object sender, EventArgs e)
         {
+            // Save the last used folder paths
+            if (File.Exists(directories)) { File.Delete(directories); }
+            File.WriteAllText(directories, sourceFolder + "\r\n" + destRootFolder);
+
             // Create new log file
             if (File.Exists(logFile)) { File.Delete(logFile); }
             logFile = Path.Combine(destRootFolder, "siby.log");
@@ -139,8 +155,15 @@ namespace siby
             Invoke((MethodInvoker)delegate () { progressBar1.Style = ProgressBarStyle.Marquee; });
             Invoke((MethodInvoker)delegate () { progressBar1.MarqueeAnimationSpeed = 30; });
 
+            int z = 0;
+            int end = paths.Count;
+
             foreach (string path in paths)
             {
+                z = z + 1;
+                
+                Invoke((MethodInvoker)delegate () { label_progress.Text = z + "//" + end; });
+
                 //string make, model;
                 DateTime dateTimeOriginal;
 
@@ -169,6 +192,13 @@ namespace siby
                 }
                 catch (Exception ex)
                 {
+                    FileInfo info = new FileInfo(logFile);
+
+                    while (IsFileLocked(info))
+                    {
+                        Thread.Sleep(1000);
+                    }
+                    
                     File.AppendAllText(logFile, ex.Message + " -> " + path + "\r\n");
                 }
             }
@@ -183,6 +213,28 @@ namespace siby
 
             //Invoke((MethodInvoker)delegate () { Close(); });
             Invoke((MethodInvoker)delegate () { Form1_Load(null, null); });
+        }
+
+        protected virtual bool IsFileLocked(FileInfo file)
+        {
+            try
+            {
+                using (FileStream stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None))
+                {
+                    stream.Close();
+                }
+            }
+            catch (IOException)
+            {
+                //the file is unavailable because it is:
+                //still being written to
+                //or being processed by another thread
+                //or does not exist (has already been processed)
+                return true;
+            }
+
+            //file is not locked
+            return false;
         }
     }
 }
