@@ -15,9 +15,9 @@ namespace siby
         // Caption for MessageBox
         public static readonly string caption = "Siby - " + Assembly.GetEntryAssembly().GetName().Version;
 
-        // Suggestion of a source and a destination folder
-        string sourceFolder = "D:\\Temp\\unsorted";
-        string destRootFolder = "D:\\Temp\\sorted";
+        // Source and a destination folder
+        string sourceFolder = string.Empty;
+        string destRootFolder = string.Empty;
 
         // The last used directories will be saved in this text file
         string directories = Path.Combine(Path.GetTempPath(), "siby.txt");
@@ -38,6 +38,15 @@ namespace siby
 
             // Caption for form
             Text = caption;
+
+            // If available read the paths of last used directories
+            if (File.Exists(directories))
+            {
+                string[] lines = File.ReadAllLines(directories);
+
+                sourceFolder = lines[0];
+                destRootFolder = lines[1];
+            }
         }
         /// <summary>
         /// Method to select the source directory
@@ -84,28 +93,40 @@ namespace siby
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            // If available read the paths of last used directories
-            if (File.Exists(directories))
+            if (Directory.Exists(sourceFolder))
             {
-                string[] lines = File.ReadAllLines(directories);
-
-                sourceFolder = lines[0];
-                destRootFolder = lines[1];
-            }
-
-            label_unsorted.Text = sourceFolder;
-            label_sorted.Text = destRootFolder;
-
-            label_counter.Text = Directory.GetFiles(sourceFolder, "*.jpg", SearchOption.AllDirectories).Count().ToString() + " JPG-files have been found";
-            label_existing.Text = Directory.GetFiles(destRootFolder, "*.*", SearchOption.AllDirectories).Count().ToString() + " files have been found";
-
-            if (!checkBox_copy.Checked & !checkBox_move.Checked)
-            {
-                button_start.Enabled = false;
+                label_counter.Text = Directory.GetFiles(sourceFolder, "*.jpg", SearchOption.AllDirectories).Count().ToString() + " JPG-files have been found"; 
+                label_unsorted.Text = sourceFolder;
             }
             else
             {
-                button_start.Enabled = true;
+                label_unsorted.Text = "not yet defined";
+            }
+
+            if (Directory.Exists(destRootFolder))
+            {
+                label_existing.Text = Directory.GetFiles(destRootFolder, "*.*", SearchOption.AllDirectories).Count().ToString() + " files have been found"; 
+                label_sorted.Text = destRootFolder;
+            }
+            else
+            {
+                label_sorted.Text = "not yet defined";
+            }
+
+            if (Directory.Exists(sourceFolder) & Directory.Exists(destRootFolder))
+            {
+                if (!checkBox_copy.Checked & !checkBox_move.Checked)
+                {
+                    button_start.Enabled = false;
+                }
+                else
+                {
+                    button_start.Enabled = true;
+                } 
+            }
+            else
+            {
+                button_start.Enabled = false;
             }
         }
 

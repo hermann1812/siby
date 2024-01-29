@@ -48,9 +48,9 @@
             this.label_sorted.AutoSize = true;
             this.label_sorted.Location = new System.Drawing.Point(134, 91);
             this.label_sorted.Name = "label_sorted";
-            this.label_sorted.Size = new System.Drawing.Size(60, 13);
+            this.label_sorted.Size = new System.Drawing.Size(124, 13);
             this.label_sorted.TabIndex = 7;
-            this.label_sorted.Text = "Destination";
+            this.label_sorted.Text = "Path to destination folder";
             // 
             // button_sorted
             // 
@@ -67,9 +67,9 @@
             this.label_unsorted.AutoSize = true;
             this.label_unsorted.Location = new System.Drawing.Point(134, 42);
             this.label_unsorted.Name = "label_unsorted";
-            this.label_unsorted.Size = new System.Drawing.Size(38, 13);
+            this.label_unsorted.Size = new System.Drawing.Size(102, 13);
             this.label_unsorted.TabIndex = 5;
-            this.label_unsorted.Text = "Souce";
+            this.label_unsorted.Text = "Path to souce folder";
             // 
             // button_unsorted
             // 
