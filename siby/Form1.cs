@@ -205,22 +205,20 @@ namespace siby
                     if (move)
                     {
                         File.Move(path, destPath);
+                        logText = path + " has been moved.";
+                        WriteLogText(logFile, logText);
                     }
                     else
                     {
                         File.Copy(path, destPath);
+                        logText = path + " has been copied.";
+                        WriteLogText(logFile, logText);
                     }
                 }
                 catch (Exception ex)
                 {
-                    FileInfo info = new FileInfo(logFile);
-
-                    while (IsFileLocked(info))
-                    {
-                        Thread.Sleep(1000);
-                    }
-                    
-                    File.AppendAllText(logFile, ex.Message + " -> " + path + "\r\n");
+                    logText = path + " -> " + ex.Message;
+                    WriteLogText(logFile, logText);
                 }
             }
             // Stop Progressbar
@@ -228,12 +226,23 @@ namespace siby
             Invoke((MethodInvoker)delegate () { progressBar1.Value = 0; });
 
             logText = "Complete! " + paths.Count + " files were processed.";
+            WriteLogText(logFile, logText);
 
-            File.AppendAllText(logFile, logText);
             MessageBox.Show(logText + "\r\nPlease check log file " + logFile, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //Invoke((MethodInvoker)delegate () { Close(); });
             Invoke((MethodInvoker)delegate () { Form1_Load(null, null); });
+        }
+
+        private void WriteLogText(string logFile, string logText)
+        {
+            FileInfo info = new FileInfo(logFile);
+
+            while (IsFileLocked(info))
+            {
+                Thread.Sleep(500);
+            }
+            File.AppendAllText(logFile, logText + Environment.NewLine);
         }
 
         protected virtual bool IsFileLocked(FileInfo file)
