@@ -41,6 +41,7 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label2 = new System.Windows.Forms.Label();
             this.label_progress = new System.Windows.Forms.Label();
+            this.checkBox_LogFile = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label_sorted
@@ -168,11 +169,22 @@
             this.label_progress.TabIndex = 16;
             this.label_progress.Text = "0/0";
             // 
+            // checkBox_LogFile
+            // 
+            this.checkBox_LogFile.AutoSize = true;
+            this.checkBox_LogFile.Location = new System.Drawing.Point(137, 149);
+            this.checkBox_LogFile.Name = "checkBox_LogFile";
+            this.checkBox_LogFile.Size = new System.Drawing.Size(85, 17);
+            this.checkBox_LogFile.TabIndex = 17;
+            this.checkBox_LogFile.Text = "Open log file";
+            this.checkBox_LogFile.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(423, 224);
+            this.Controls.Add(this.checkBox_LogFile);
             this.Controls.Add(this.label_progress);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.progressBar1);
@@ -212,6 +224,7 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label_progress;
+        private System.Windows.Forms.CheckBox checkBox_LogFile;
     }
 }
 

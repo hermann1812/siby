@@ -1,7 +1,9 @@
 ﻿using ExifLib;
+using Microsoft.Win32;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -217,7 +219,7 @@ namespace siby
                 }
                 catch (Exception ex)
                 {
-                    logText = path + " -> " + ex.Message;
+                    logText = "==> ERROR <== " + path + " -> " + ex.Message;
                     WriteLogText(logFile, logText);
                 }
             }
@@ -227,6 +229,11 @@ namespace siby
 
             logText = "Complete! " + paths.Count + " files were processed.";
             WriteLogText(logFile, logText);
+
+            if (checkBox_LogFile.Checked)
+            {
+                ShowLogFile(logFile);
+            }
 
             MessageBox.Show(logText + "\r\nPlease check log file " + logFile, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -265,6 +272,12 @@ namespace siby
 
             //file is not locked
             return false;
+        }
+
+        private void ShowLogFile(string logFile)
+        {
+            // Den Prozess starten
+            Process.Start(logFile);
         }
     }
 }
