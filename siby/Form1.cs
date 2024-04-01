@@ -207,13 +207,13 @@ namespace siby
                     if (move)
                     {
                         File.Move(path, destPath);
-                        logText = path + " has been moved.";
+                        logText = path + " has been moved to " + destPath;
                         WriteLogText(logFile, logText);
                     }
                     else
                     {
                         File.Copy(path, destPath);
-                        logText = path + " has been copied.";
+                        logText = path + " has been copied to " + destPath;
                         WriteLogText(logFile, logText);
                     }
                 }

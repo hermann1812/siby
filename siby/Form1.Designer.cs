@@ -172,6 +172,8 @@
             // checkBox_LogFile
             // 
             this.checkBox_LogFile.AutoSize = true;
+            this.checkBox_LogFile.Checked = true;
+            this.checkBox_LogFile.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_LogFile.Location = new System.Drawing.Point(137, 149);
             this.checkBox_LogFile.Name = "checkBox_LogFile";
             this.checkBox_LogFile.Size = new System.Drawing.Size(85, 17);
