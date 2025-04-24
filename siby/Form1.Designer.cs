@@ -97,6 +97,8 @@
             // checkBox_move
             // 
             this.checkBox_move.AutoSize = true;
+            this.checkBox_move.Checked = true;
+            this.checkBox_move.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_move.Location = new System.Drawing.Point(16, 149);
             this.checkBox_move.Name = "checkBox_move";
             this.checkBox_move.Size = new System.Drawing.Size(53, 17);
@@ -173,8 +175,6 @@
             // checkBox_LogFile
             // 
             this.checkBox_LogFile.AutoSize = true;
-            this.checkBox_LogFile.Checked = true;
-            this.checkBox_LogFile.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_LogFile.Location = new System.Drawing.Point(137, 149);
             this.checkBox_LogFile.Name = "checkBox_LogFile";
             this.checkBox_LogFile.Size = new System.Drawing.Size(85, 17);
